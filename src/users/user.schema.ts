@@ -8,7 +8,7 @@ export class User {
   @Prop()
   userId: string;
 
-  @Prop()
+  @Prop({ require: true })
   name: string;
 
   @Prop()
