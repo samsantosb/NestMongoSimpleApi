@@ -16,31 +16,25 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     const users = await this.userModel.find().lean();
     if (!users) {
-      throw new Error('No users found');
+      return [];
     }
     return users;
   }
 
   async findOne(id: string): Promise<User> {
-    let user: User;
+    const user: User =
+      id.match(/^[0-9a-fA-F]{24}$/) &&
+      (await this.userModel.findById(id).lean());
 
-    if (id.match(/^[0-9a-fA-F]{24}$/)) {
-      user = await this.userModel.findById(id).lean();
-    }
-
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
+    if (!user) throw new NotFoundException('User not found');
 
     return user;
   }
 
   async update(id: string, createUserDto: CreateUserDto): Promise<User> {
-    let user: User;
-
-    if (id.match(/^[0-9a-fA-F]{24}$/)) {
-      user = await this.userModel.findById(id).lean();
-    }
+    const user: User =
+      id.match(/^[0-9a-fA-F]{24}$/) &&
+      (await this.userModel.findById(id).lean());
 
     if (!user) throw new NotFoundException('User not found');
 
@@ -48,11 +42,9 @@ export class UsersService {
   }
 
   async delete(id: string): Promise<User> {
-    let user: User;
-
-    if (id.match(/^[0-9a-fA-F]{24}$/)) {
-      user = await this.userModel.findById(id).lean();
-    }
+    const user: User =
+      id.match(/^[0-9a-fA-F]{24}$/) &&
+      (await this.userModel.findById(id).lean());
 
     if (!user) throw new NotFoundException('User not found');
 
