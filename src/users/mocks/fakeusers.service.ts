@@ -1,46 +1,33 @@
 import { CreateUserDto } from '../dto/create-user.dto';
 import { User } from '../user.schema';
 import { UsersService } from '../users.service';
+import { fakeUser } from './data/fakeuser';
 
 export const fakeUsersService: Partial<UsersService> = {
-  create: (createUserDto: CreateUserDto) => {
+  create: (createUserDto: CreateUserDto): Promise<User> => {
     return Promise.resolve({
       ...createUserDto,
     } as User);
   },
-  findOne: (userId: string) => {
+  findOne: (id: string): Promise<User> => {
     return Promise.resolve({
-      userId: userId,
-      email: 'asdf@asdf.com',
-      name: 'asdf',
-      age: 12,
+      id: id,
+      ...fakeUser,
     } as User);
   },
   findAll: () => {
-    return Promise.resolve([
-      {
-        userId: '1',
-        email: 'asdf@asd.com',
-        name: 'asdf',
-        age: 12,
-      } as User,
-      {
-        userId: '2',
-        email: 'bob@bob.com',
-        name: 'bob',
-        age: 12,
-      } as User,
-    ]);
+    return Promise.resolve([fakeUser as User, fakeUser as User]);
   },
-  update: (userId: string, updateUserDto: CreateUserDto) => {
+  update: (id: string, updateUserDto: CreateUserDto): Promise<User> => {
     return Promise.resolve({
-      userId: userId,
+      id: id,
       ...updateUserDto,
     } as User);
   },
-  delete: (userId: string): Promise<Object> => {
+  delete: (id: string): Promise<User> => {
     return Promise.resolve({
-      message: `User with id ${userId} is deleted from database`,
+      id: id,
+      ...fakeUser,
     });
   },
 };
