@@ -9,7 +9,9 @@ export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
+    const createdUser = await this.userModel.create(createUserDto);
+
+    if (!createdUser) throw new NotFoundException('could not create the user');
 
     return createdUser.save();
   }
