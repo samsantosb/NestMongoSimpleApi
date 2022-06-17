@@ -7,7 +7,6 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { get } from 'http';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -20,7 +19,8 @@ export class UsersController {
 
   @Get('/:userId')
   async getUser(@Param('userId') userId: string): Promise<User> {
-    return this.usersService.findOne(userId);
+    const user = await this.usersService.findOne(userId);
+    return user;
   }
 
   @Get()
@@ -42,7 +42,7 @@ export class UsersController {
   }
 
   @Delete('/:userId')
-  async deleteUser(@Param('userId') userId: string): Promise<User> {
+  async deleteUser(@Param('userId') userId: string): Promise<Object> {
     return this.usersService.delete(userId);
   }
 }
