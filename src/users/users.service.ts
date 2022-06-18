@@ -13,11 +13,11 @@ export class UsersService {
 
     if (!createdUser) throw new NotFoundException('could not create the user');
 
-    return createdUser.save();
+    return createdUser;
   }
 
   async findAll(): Promise<User[]> {
-    const users = await this.userModel.find().lean();
+    const users = await this.userModel.find();
 
     if (!users) return [];
 
@@ -26,7 +26,7 @@ export class UsersService {
 
   async findOne(id: string): Promise<User> {
     const user: User =
-      Types.ObjectId.isValid(id) && (await this.userModel.findById(id).lean());
+      Types.ObjectId.isValid(id) && (await this.userModel.findById(id));
 
     if (!user) throw new NotFoundException('User not found');
 
@@ -35,7 +35,7 @@ export class UsersService {
 
   async update(id: string, createUserDto: CreateUserDto): Promise<User> {
     const user: User =
-      Types.ObjectId.isValid(id) && (await this.userModel.findById(id).lean());
+      Types.ObjectId.isValid(id) && (await this.userModel.findById(id));
 
     if (!user) throw new NotFoundException('User not found');
 
@@ -44,7 +44,7 @@ export class UsersService {
 
   async delete(id: string): Promise<User> {
     const user: User =
-      Types.ObjectId.isValid(id) && (await this.userModel.findById(id).lean());
+      Types.ObjectId.isValid(id) && (await this.userModel.findById(id));
 
     if (!user) throw new NotFoundException('User not found');
 

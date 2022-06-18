@@ -5,3 +5,5 @@ export const fakeUser: User = {
   name: 'fake',
   age: 12,
 };
+
+export const fakeId = '123123123123123123123123';

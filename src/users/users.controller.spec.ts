@@ -2,15 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { fakeUsersService } from './mocks/fakeusers.service';
-import { fakeUser } from './mocks/data/fakeuser';
+import { fakeUser, fakeId } from './mocks/data/fakeData';
 
 describe('UsersController', () => {
   let usersController: UsersController;
   let usersService: UsersService;
 
   beforeEach(async () => {
-    fakeUsersService;
-
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
       providers: [
@@ -35,9 +33,9 @@ describe('UsersController', () => {
   });
 
   it('should return a user', async () => {
-    const user = await usersController.getUser('123');
+    const user = await usersController.getUser(fakeId);
     expect(user).toEqual({
-      id: '123',
+      id: fakeId,
       ...fakeUser,
     });
   });
@@ -48,19 +46,19 @@ describe('UsersController', () => {
   });
 
   it('should update a user', async () => {
-    const user = await usersController.updateUser('123', {
+    const user = await usersController.updateUser(fakeId, {
       ...fakeUser,
     });
     expect(user).toEqual({
-      id: '123',
+      id: fakeId,
       ...fakeUser,
     });
   });
 
   it('should delete a user', async () => {
-    const user = await usersController.deleteUser('123');
+    const user = await usersController.deleteUser(fakeId);
     expect(user).toEqual({
-      id: '123',
+      id: fakeId,
       ...fakeUser,
     });
   });
